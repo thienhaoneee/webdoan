@@ -215,13 +215,13 @@
 
     .slider-1 {
         min-width: unset;
-        /* height: 208px; */
+        /* height: 250px; */
     }
     .section-1 {
         height: 100%;
     }
     .slider-1 .slider-item{
-        height: 250px;
+        height: 250px ;
     }
     .slider-2 .slider-item{
         height: 120px;
@@ -340,5 +340,6 @@
     .footer-bot p {
         margin-bottom: 13px;
     }
+    
 }
 

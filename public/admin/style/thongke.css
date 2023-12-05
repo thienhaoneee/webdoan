@@ -1,0 +1,48 @@
+.thongke_title {
+    color: #be1e2d;
+    font-weight: 700;
+    text-align: center;
+}
+
+.chart-wrapper {
+    padding-top: 12px ;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+}
+.chart-col__wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.thongke-filter__year-wrapper,
+.thongke-filter__month-wrapper,
+.thongke-filter__day-wrapper {
+    padding: 8px 12px;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.thongke-filter__year,
+.thongke-filter__month,
+.thongke-filter__day {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.thongke-filter__year-input {
+    width: 100px;
+}
+.thongke-filter__year .current-year {
+    width: 100px;
+
+}
+.table-chart {
+    padding: 10px 10px 20px;
+    background-color: #fff;
+    border-radius: 12px;
+}
+.thongke__open {
+    display: flex;
+}

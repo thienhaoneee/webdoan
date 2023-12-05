@@ -1,0 +1,19 @@
+
+.height-95 {
+    height: 95px;
+}
+
+.add-detail__img-wrapper {
+    height: 83px;
+    width: 79px;
+    display: flex;
+    justify-content: center;
+    padding: 3px 0;
+}
+.add-detail__edit-img,
+.add-detail__img {
+    width: 73px;
+    padding: 2px;
+    border: 1px solid rgba(0,0,0,0.2);
+
+}

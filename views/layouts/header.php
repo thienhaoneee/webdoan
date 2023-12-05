@@ -6,6 +6,11 @@
                 <img src="./public/image/header/header-top-15.png" alt="header-top" class="header-top__img" width="100%">
             </a>
         </div>
+        <?php if(isset($_SESSION['admin'])){
+            echo "<a href='./main.php' class='header-top__admin-btn'><i class='fa-solid fa-house'></i>Admin</a>";
+        }  
+        ?>
+        
     </div>
 
     <div class="header-page">
@@ -133,12 +138,12 @@
 <div class="modal">
         <div class="modal-container">
             <div class="rw">
-                <div class="column c-6">
+                <div class="column c-0 m-6">
                     <div class="modal-img">
                         <img src="./public/image/modal/loginbg.png" alt="">
                     </div>
                 </div>
-                <div class="column c-6 modal-login">
+                <div class="column c-12 m-6 modal-login">
                     <!-- modal-close -->
                     <div class="modal-header">
                         <h5>Đăng Nhập</h5>
@@ -147,15 +152,15 @@
                         <form class="modal-form" id="form-login">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="phoneLogin"
-                                placeholder="Số điện thoại" name="phoneLogin" value="012345678"> 
+                                placeholder="Số điện thoại" name="phoneLogin" value="0702906699"> 
                                 <span class="form-message"></span>
                             </div>
                             <div class="form-group">
-                                <input type="modal" class="form-control" id="passwordLogin"
+                                <input type="password" class="form-control" id="passwordLogin"
                                 placeholder="Mật khẩu" name="passwordLogin" value="tung123"> 
                                 <span class="form-message"></span>
                             </div>
-                            <button type="submit" class="btn modal-btn">Đăng ký</button>
+                            <button type="submit" class="btn modal-btn">Đăng nhập</button>
                         </form>
                         <div class="modal-bridge">
                             <div class="modal-bridge__col">
@@ -183,7 +188,7 @@
                     </div>
                     <!-- end modal-body -->
                 </div>
-                <div class="column c-6 modal-register">
+                <div class="column c-12 m-6 modal-register">
                     <!-- modal-close -->
                     <div class="modal-header">
                         <h5>Đăng Ký</h5>
@@ -192,32 +197,32 @@
                         <form class="modal-form" id="form-register">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="usernameRegister" name="usernameRegister" 
-                                placeholder="Họ và tên" value="Nguyễn Thanh Tùng">
+                                placeholder="Họ và tên" value="">
                                 <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <input type="email" class="form-control" id="emailRegister" name="emailRegister" 
-                                placeholder="Email" value="tung@gmail.com">
+                                placeholder="Email" value="">
                                 <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="phoneRegister" name="phoneRegister" 
-                                placeholder="Số điện thoại" value="012345678">
+                                placeholder="Số điện thoại" value="">
                                 <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="addressRegister" name="addressRegister" 
-                                placeholder="Địa chỉ" value="tp hồ chí minh">
+                                placeholder="Địa chỉ" value="">
                                 <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="passwordRegister" name="passwordRegister" 
-                                placeholder="Mật khẩu" value="tung123">
+                                placeholder="Mật khẩu" value="">
                                 <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="passwordConfirmRegister" name="passwordConfirmRegister" 
-                                placeholder="Nhập lại mật khẩu" value="tung123">
+                                placeholder="Nhập lại mật khẩu" value="">
                                 <span class="form-message"></span>
                             </div>
                             <button type="submit" class="btn modal-btn">Đăng ký</button>

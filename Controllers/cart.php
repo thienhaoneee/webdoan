@@ -19,7 +19,6 @@
                         }
                     }
                 }
-
                 $response = [
                     'error'=>false,
                     'message'=>$_SESSION['cart']
@@ -32,7 +31,6 @@
                 $cart = new cart();
                 $id = $_POST['id'];
                 $quantity = $_POST['quantity'];
-
                 $check = $cart->update_item($id,$quantity);
                 if(count($check) != 0) {
                     $totalAll = $cart->getTotalAll();
@@ -63,7 +61,6 @@
                     }
                 }
                 $totalAll = $cart->getTotalAll();
-
             }
             $response = [
                 'error' => false,

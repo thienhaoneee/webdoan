@@ -1,6 +1,6 @@
 <?php
 $brand_in = isset($_GET['brand']) ? $_GET['brand'] : '';
-$model_in = isset($_GET['model']) ? $_GET['model'] : ''
+$model_in = isset($_GET['model']) ? $_GET['model'] : 'null'
 ?>
 <!-- ================= body Area Begin ================= -->
 <div class="content">
@@ -9,13 +9,13 @@ $model_in = isset($_GET['model']) ? $_GET['model'] : ''
         <!-- header-breadcrumb -->
         <div class="header-breadcrumb">
             <div class="header-breadcrumb__item">
-                <a href="#" class="header-breadcrumb__link">
+                <a href="./index.php" class="header-breadcrumb__link">
                     Trang chủ
                 </a>
             </div>
             <div class="header-breadcrumb__spread">/</div>
             <div class="header-breadcrumb__item">
-                <a href="#" class="header-breadcrumb__link">
+                <a href="./index.php?action=shop&brand=apple" class="header-breadcrumb__link">
                     Điện thoại
                 </a>
             </div>
@@ -35,7 +35,7 @@ $model_in = isset($_GET['model']) ? $_GET['model'] : ''
                     <!-- ==>code-php -->
                     <?php
                     $brand = new modelbrand();
-                    $rs_brand = $brand->getBrand($brand_in);
+                    $rs_brand = $brand->getBrand();
                     while ($row = $rs_brand->fetch()) :
                     ?>
                         <div class="header-filter-brand__item">
@@ -59,8 +59,7 @@ $model_in = isset($_GET['model']) ? $_GET['model'] : ''
                     $rs_model = $model->getModel($brand_in);
                     while ($row = $rs_model->fetch()) :
                     ?>
-                        <a class="header-filter-model__link" href="index.php?action=shop&brand=<?php echo strtolower($row['brand_name'])
-                                                                                                ?>&model=<?php echo strtolower($row['model_name']) ?>">
+                        <a class="header-filter-model__link" href="index.php?action=shop&brand=<?php echo strtolower($row['brand_name'])?>&model=<?php echo strtolower($row['model_name']) ?>">
                             <p><?php echo $row['model_name'] ?></p>
                         </a>
                     <?php endwhile ?>
@@ -83,7 +82,10 @@ $model_in = isset($_GET['model']) ? $_GET['model'] : ''
         <!-- product-list -->
         <div class="product-list">
             <div class="product__tiltle">
-                <h2><a href="#">Điện thoại Apple iPhone VN/A Chính Hãng</a></h2>
+                <?php 
+                    $brand_current = $brand->getBrand($brand_in);
+                ?>
+                <h2><a href="#">Điện thoại <?php echo $brand_current['brand_name']?> Chính Hãng</a></h2>
                 <div class="product-filter">
                     <p class="product-filter__context">Sắp xếp theo</p>
                     <a href="#" class="product-filter__link">
@@ -112,7 +114,6 @@ $model_in = isset($_GET['model']) ? $_GET['model'] : ''
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <!--####### view product render -->
@@ -122,6 +123,8 @@ $model_in = isset($_GET['model']) ? $_GET['model'] : ''
                 <?php
                 $sp = new sanpham();
                 $result = $sp->getAllSPbyBrand($brand_in, $model_in);
+                $countProductLenth = $sp->getCountProduct($brand_in, $model_in);
+                if($countProductLenth > 0)
                 while ($row = $result->fetch()) :
                 ?>
                     <div class="column l-20 c-6">
@@ -140,8 +143,12 @@ $model_in = isset($_GET['model']) ? $_GET['model'] : ''
                             </div>
                             <h3 class="product__name"><?php echo $row['tensp'] . ' ' . $row['rom_name'] . ' ' . $row['type_name'] ?></h3>
                             <div class="product__price-wrapper">
-                                <p class="product__sale-price"><?php echo formatCurrency($row['sale_price']) ?></p>
-                                <p class="product__old-price"><?php echo formatCurrency($row['price']) ?></p>
+                                <?php if($row['sale_price']) {?>
+                                    <p class="product__sale-price"><?php echo formatCurrency($row['sale_price']) ?></p>
+                                    <p class="product__old-price"><?php echo formatCurrency($row['price']) ?></p>
+                                <?php } else {?>
+                                    <p class="product__sale-price"><?php echo formatCurrency($row['price']) ?></p>
+                                <?php }?>
                             </div>
                             <div class="product__banner-cheapest">
                                 <img src="./public/image/main-banner/banner-cheapest.webp" alt="">
@@ -151,13 +158,26 @@ $model_in = isset($_GET['model']) ? $_GET['model'] : ''
                 <?php endwhile ?>
                 <!-- ==>code-php end -->
             </div>
-
+            
+            <?php
+                if($countProductLenth == 0):
+            ?>
+                <div class="home__product-null">
+                    <img src="./public/image/noproduct.png" alt="">
+                    <h3>Chưa có sản phẩm nào</h3>
+                </div>
+            <?php
+                endif
+            ?>
         </div>
+        <input type="hidden" value="<?php echo $countProductLenth?>" name="countProduct">
 
 
         <!-- button xem thêm sản phẩm -->
         <div class="show-more">
-            <button class="show-more__btn">Xem thêm <span class="show-more__number">5</span> sản phẩm</button>
+            <button class="show-more__btn" onclick="showMoreProduct(<?php echo '\''.$brand_in.'\'' ?>,<?php echo '\''.$model_in.'\''?>)">
+                Xem thêm <span class="show-more__number"></span> sản phẩm
+            </button>
         </div>
     </div>
 
@@ -170,22 +190,6 @@ $model_in = isset($_GET['model']) ? $_GET['model'] : ''
     
 
 <script src="./public/javascript/main.js"></script>
-<script type="module">
-    <?php include('./public/javascript/header.js') ?>
-    <?php include('./public/javascript/model_category.js') ?>
-
-    // show more
-    <?php
-    $sp = new sanpham();
-    $result_ar = $sp->getAllSPbyBrand($brand_in, $model_in);
-    $data = array();
-    while ($row = $result_ar->fetch()) {
-        array_push($data, $row);
-    }
-    ?>
-    showMoreProduct({
-        listProduct: <?php echo json_encode($data) ?>,
-        startIndex: 10
-    });
-</script>
+<script src="./public/javascript/header.js"></script>
+<script src="./public/javascript/model_category.js"></script>
 <script src="https://kit.fontawesome.com/737f765a39.js" crossorigin="anonymous"></script>

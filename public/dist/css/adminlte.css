@@ -2351,7 +2351,7 @@ textarea.form-control {
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 3px;
 }
 
 .form-text {
@@ -11200,7 +11200,6 @@ body,
 .layout-navbar-fixed.layout-fixed .wrapper .control-sidebar {
   top: calc(3.5rem + 1px);
 }
-
 .layout-navbar-fixed.layout-fixed .wrapper .main-header.text-sm ~ .control-sidebar {
   top: calc(2.93725rem + 1px);
 }

@@ -36,13 +36,13 @@
         <!-- ##### header-breadcrumb  render-->
         <div class="header-breadcrumb">
             <div class="header-breadcrumb__item">
-                <a href="#" class="header-breadcrumb__link">
+                <a href="./index.php" class="header-breadcrumb__link">
                     Trang chủ
                 </a>
             </div>
             <div class="header-breadcrumb__spread">/</div>
             <div class="header-breadcrumb__item">
-                <a href="#" class="header-breadcrumb__link">
+                <a href="./index.php?action=shop&brand=apple" class="header-breadcrumb__link">
                     Điện thoại
                 </a>
             </div>
@@ -54,7 +54,7 @@
             </div>
             <div class="header-breadcrumb__spread">/</div>
             <div class="header-breadcrumb__item">
-                <a href="#" class="header-breadcrumb__link">
+                <a href="./index.php?action=shop&brand=apple&model=<?php echo $model_name?>" class="header-breadcrumb__link">
                     <?php echo $model_name ?>
                 </a>
             </div>
@@ -225,8 +225,13 @@
                         <p class="single-product__label-price">Giá bán</p>
                         <div class="single-product__price">
                             <div class="single-product__price-wrapper">
-                                <p class="single-product__sale-price"><?php echo formatCurrency($sale_price) ?></p>
-                                <span class="single-product__old-price"><?php echo formatCurrency($price) ?></span>
+                            <?php if($sale_price) {?>
+                                    <p class="single-product__sale-price"><?php echo formatCurrency($sale_price) ?></p>
+                                    <span class="single-product__old-price"><?php echo formatCurrency($price) ?></span>
+                                <?php } else {?>
+                                    <p class="single-product__sale-price"><?php echo formatCurrency($price) ?></p>
+
+                                <?php }?>
                             </div>
                             <p class="single-product__pay-before">
                                 Trả trước chỉ từ <br> <span><?php echo formatCurrency($sale_price / 2) ?></span>
@@ -494,6 +499,114 @@
         </div>
         <!--product-iphone end-->
 
+
+        <!-- Comment section -->
+        <div class="rw">
+            <section class="column c-12 m-8">
+                <div class="product-single__comment">
+                    <!-- form comment -->
+                    <form class="product-single-comment__form" id="product-single-comment__form">
+                        <p class="product-single-comment__title">Bình luận</p>
+                        <?php 
+                            $user_id = '';
+                            if(isset($_SESSION['user'])) {
+                                $user_id = $_SESSION['user']['makh'];
+                            }
+                        ?>
+                        <input type="hidden" value="<?php echo $user_id?>" name="makh" class="product-comment__user-id">
+                        <input type="hidden" value="<?php echo $product_id?>" name="product_id">
+                        <div class="rw">
+                            <div class="column c-9">
+                                <div class="form-group">
+                                    <textarea class="product-single-comment__textarea" 
+                                    name="content" id="" cols="" rows="5"
+                                    placeholder="Nhận xét về sản phẩm"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <div class="column c-3">
+                                <div class="product-single-comment__btn-wrapper">
+                                    <button type="button" class="product-single-comment__btn" onclick="submitComment()">Bình luận</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- end form -->
+                    <!-- comment-wrapper -->
+                    <div class="product-single-comment__content-wrapper">
+                        <?php
+                            $cmt = new comment();
+                            $comments = $cmt->getComment($product_id);
+                            $check = $cmt->checkComment($product_id);
+                            if($check == true){
+                            while($comment = $comments->fetch()):
+                        ?>
+                        <!-- comment-item -->
+                        <div class="product-single-comment__item">
+                            <div class="product-single-comment__item-user">
+                                <div class="product-single-comment__item-img">
+                                    <img src="./public/image/icon/user-default.png" alt="">
+                                </div>
+                                <div class="product-single-comment__item-info">
+                                    <p class="product-single-comment__item-username"><?php echo $comment['khachhang_name']?></p>
+                                    <p class="product-single-comment__item-content"><?php echo $comment['content']?></p>
+                                    <p class="product-single-comment__item-time"><?php echo $comment['created_at']?></p>
+                                </div>
+                            </div>
+                            <div class="product-single-comment__item-btn-wrapper">
+                                <button class="product-single-comment__item-btn"
+                                onclick="showViewSubComment(<?php echo $comment['cmt_id'] ?>,<?php echo $user_id==''?0:$user_id;?>, <?php echo $product_id?>)"
+                                ><i class="fa-regular fa-comments"></i> Bình luận</button>
+                            </div>
+
+                            <!-- insert comment -->
+                            <div class="form-wrapper__id-<?php echo $comment['cmt_id']?>"></div>
+                            
+                            <!-- insert comment -->
+
+                            <!-- freeback -->
+                            <div class="product-single-comment__feedback-<?php echo $comment['cmt_id']?>">
+                                <!-- freeback-item -->
+                                    <?php
+                                        $subs = $cmt->getComment($product_id,$comment['cmt_id']);
+                                        if($subs) while($sub = $subs->fetch()):
+                                    ?>
+                                    <div class="product-single-comment__feedback-item">
+                                        <div class="product-single-comment__feedback-img">
+                                            <img src="./public/image/icon/user-default.png" alt="">
+                                        </div>
+                                        <div class="product-single-comment__feedback-info">
+                                            <p class="product-single-comment__feedback-username"><?php echo $sub['khachhang_name']?></p>
+                                            <p class="product-single-comment__feedback-content"><?php echo $sub['content']?></p>
+                                            <p class="product-single-comment__feedback-time"><?php echo $sub['created_at']?></p>
+                                        </div>
+                                    </div>
+                                    <?php endwhile?>
+                            </div>
+                            <!-- end freeback -->
+
+                        </div>
+                        <!-- comment-item -->
+                        <?php endwhile; } else { ?>
+                            <!-- nocomment -->
+                            <div class="product-single-nocomment">
+                                <div class="product-single-nocomment-img">
+                                    <img src="./public/image/nocomment.png" alt="">
+                                    <p>Chưa có bình luận nào</p>
+                                </div>
+                            </div>
+                        <?php } ?>
+
+
+                    </div>
+                    <!-- end comment-wrapper -->
+
+                    
+                </div>
+            </section>
+        </div>
+        <!-- Comment section -->
+
     </div>
 </div>
 
@@ -505,11 +618,11 @@
 </div>
 
 
-
+<script src="./public/javascript/main.js"></script>
+<script src="./public/javascript/header.js"></script>
+<script src="./public/javascript/swiper.js"></script>
+<script src="./public/javascript/comment.js"></script>
 <script type="module">
-    <?php include('./public/javascript/main.js') ?>
-    <?php include('./public/javascript/header.js') ?>
-    <?php include('./public/javascript/swiper.js') ?>
     usingSwiper(3)
 </script>
 <script src="https://kit.fontawesome.com/737f765a39.js" crossorigin="anonymous"></script>

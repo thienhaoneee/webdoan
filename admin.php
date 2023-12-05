@@ -9,15 +9,15 @@
         include $path . $className . '.php';
     };
         
-    $ctr = 'login';
+    $ctr = 'main';
     if(isset($_GET['action'])){
         $ctr = $_GET['action'];
     }
-    if(isset($_SESSION['admin'])) {
-        
-        header("location: ./main.php?action=main");
-
-    } else {
+    if(isset($_SESSION['admin']) || $ctr=='login') {
         include('./Controllers/admin/'.$ctr.'.php');
+    } else {
+        header("location: ./admin.php?action=login");
     }
+    
+    
 ?>

@@ -1,11 +1,97 @@
 
-/* .logout-btn {
-    padding: 8px;
-    background-color: #454c53;
-    border-radius: 6px;
+.sanpham-detail__btn-back {
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.main-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    /* background-color: red !important; */
+    height: 100vh;
+}
+#form-add-1 .form-group,
+#form-edit-1 .form-group {
+    height: 95px;
+}
+.form-group {
+    margin-bottom: 0;
+}
+.form-group .form-message {
+    height: 20px;
+}
+.form-group.invalid .form-message {
+    color: red;
+}
+.form-group.invalid input,
+.form-group.invalid select{
+    /* outline:  1px solid rgb(224, 84, 84); */
+    border-color: red;
+}
+
+/* list */
+.table-list-product th, 
+.table-list-product td {
+    text-align: center !important;
+}
+.table-list-product td {
+    vertical-align: middle;
+}
+
+/* detail table */
+.table-detail_product th, 
+.table-detail_product td {
+    text-align: center !important;
+}
+.table-detail_product th {
+    text-wrap: nowrap
 
 }
-.logout-btn p {
-    margin-bottom: 0;
-    color: #fff;
-} */
+.table-detail_product td {
+    vertical-align: middle;
+}
+.detail-product__col-name {
+    width: 400px;
+}
+.detail-product__item-name  {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+}
+.detail-product__item-name-wrapper {
+    text-align: start;
+    margin-left: 10px;
+}
+.edit-button__wrapper {
+    min-width: 95px;
+}
+.detail-product__item-name-wrapper p {
+    margin-bottom: 0px;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.list-detail__btn-addnew {
+    background-color: #fff;
+    color: #000 !important;
+}
+.list-detail__btn-addnew:hover {
+    background-color: #eeeeee;
+}
+.list-detail__product-null {
+    background-color: #fefefe;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.list-detail__product-null img {
+    width: 200px;
+}

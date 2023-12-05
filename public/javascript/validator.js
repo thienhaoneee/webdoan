@@ -144,9 +144,6 @@ function Validator(options) {
 }
 
 // Định nghĩa rules
-// nguyên tắc của các rules:
-// 1.khi có lỗi => trả ra message lỗi   
-// 2. khi hợp lệ => không trả ra cái gì cả(undefined)
 Validator.isRequired = function (selector, message) {
     return {
         selector: selector,
@@ -185,12 +182,29 @@ Validator.isConfirmed = function (selector, getConfirmValue, message) {
         }
     }
 }
+Validator.isSalePrice = function (selector, getConfirmValue, message) {
+    return {
+        selector: selector,
+        test: function(value) {
+            return value <= getConfirmValue() ? undefined : message || 'Giá trị nhập vào phải nhỏ hơn giá'
+        }
+    }
+}
 //new rule
 Validator.maxLength = function(selector, max, message) {
     return {
         selector: selector,
         test: function (value){
             return value.length <= max ? undefined : message || `Vui lòng nhập tối đa ${max} kí tự`
+        }
+    }
+}
+Validator.isPhone = function(selector, message) {
+    return {
+        selector: selector,
+        test: function(value) {
+            var regex = /^[0-9\-\+]{9,15}$/;
+            return regex.test(value) ? undefined : message || 'Vui lòng nhập đinh dạng số điện thoại'
         }
     }
 }

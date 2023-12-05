@@ -5,9 +5,11 @@
     }
     switch($act){
         case 'main':
+            include('./views/admin/thongke.php');
+            break;
+        case 'admin':
             include('./views/admin/main.php');
             break;
-        
         default:
             echo "invalid case";
     }

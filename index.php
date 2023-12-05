@@ -1,4 +1,4 @@
-<?php session_start()?>
+<?php session_start(); ob_start()?>
 <!DOCTYPE html>
 <html lang="en">
     <?php
@@ -21,13 +21,14 @@
     <link rel="stylesheet" href="./public/style/grid.css">
     <link rel="stylesheet" href="./public/style/main.css">
     <link rel="stylesheet" href="./public/style/header.css">
-    <link rel="stylesheet" href="./public/style/responsive.css">
     <link rel="stylesheet" href="./public/style/slider.css">
+    <link rel="stylesheet" href="./public/style/responsive.css">
 
     <link rel="stylesheet" href="./public/style/shop.css">
     <link rel="stylesheet" href="./public/style/single.css">
     <link rel="stylesheet" href="./public/style/cart.css">
     <link rel="stylesheet" href="./public/style/checkout.css">
+    <link rel="stylesheet" href="./public/style/comment.css">
     
 </head>
 
@@ -87,8 +88,10 @@
                     dataType: 'json',
                     data: { info },
                     success: function(response) {
-                        if(!response.error)
-                        location.reload();
+                        if(!response.error) {
+                            location.reload();
+                            // console.log('reload login :>> ', response.message);
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error('Lỗi:', error);
@@ -152,7 +155,7 @@
                 success: function(response) {
                     if(!response.error) {
                         console.log('Đăng xuất :>> ', !response.error);
-                        location.reload();
+                        location.href = './index.php';
                     }
                 }
             })
@@ -163,3 +166,4 @@
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

@@ -7,7 +7,7 @@ class user
 
     function insertUser($name, $email, $password, $diachi, $phone) {
         $db = new connect();
-        $query = "INSERT INTO khachhang (khachhang_name, email,password, diachi, phone,updated_date,created_date) 
+        $query = "INSERT INTO khachhang (khachhang_name, email,password, diachi, phone,updated_at,created_at) 
                         VALUES ('$name', '$email', '$password', '$diachi', '$phone', NOW(), NOW());";
         $db->exec($query);
     }
@@ -22,7 +22,7 @@ class user
     function userLogin($phone, $pass) {
         $db = new connect();
         $query = "SELECT * FROM khachhang kh
-                        WHERE kh.phone = '$phone' AND kh.password = '$pass'";
+            WHERE kh.phone = '$phone' AND kh.password = '$pass'";
         $result = $db->getInstance($query);
         return $result;
     }

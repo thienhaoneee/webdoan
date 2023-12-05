@@ -1,13 +1,16 @@
 <?php
     class modelbrand {
          //Lấy ra Danh sách Brand
-        function getBrand() {
+        function getBrand($brand_name = '') {
             //kết nối
             $db = new connect();
-
-            //viết truy vấn
             $select = "SELECT * FROM brand";
-
+            if($brand_name != '') {
+                $select = "SELECT * FROM brand where brand_name like '$brand_name'";
+                $result = $db->getInstance($select);
+                return $result;
+            }
+            //viết truy vấn
             // trả kết quả
             $result = $db->getList($select);
             return $result;

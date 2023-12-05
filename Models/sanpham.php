@@ -24,26 +24,15 @@
                 WHERE s.masp = ct.masp AND ct.color_id=c.color_id AND r.rom_id=ct.rom_id
                 AND s.masp =img.masp AND ct.color_id=img.color_id AND ct.type_id=t.type_id
                 AND t.type_id IN (1,3) AND img.main_image LIKE 'true' 
-                
                 ORDER BY r.rom_id;
             ";
-                // 
-            // if(is_numeric($start) && is_numeric($limit)){
-            //     $select = "
-            //     SELECT tenhh, hinh, mausac, s.size, ct.soluongton, ct.dongia, h.giamgia 
-            //     FROM hanghoa h, cthanghoa ct, sizegiay s, mausac m 
-            //     where h.mahh=ct.idhanghoa and ct.idmau=m.Idmau and ct.idsize=s.Idsize
-            //     limit $start,  $limit;
-            //     ";
-            // }
             $result = $db->getList($select);
             return $result;
-            
         }   
-        function getAllSPbyBrand($brand = null, $model = ''){
+        function getAllSPbyBrand($brand, $model = "null", $start = 0, $limit = 5){
             $db = new connect();
             $select = '';
-            if($model == '') {
+            if($model == 'null') {
                 $select = "SELECT s.masp, ct.product_id, s.tensp, c.color_name, r.rom_name,ct.sale_price, ct.price,
                     t.type_name,b.brand_name,img.image_url,img.main_image
                     FROM sanpham s, chitiet_sanpham ct,color c, rom r,
@@ -53,7 +42,8 @@
                     AND s.brand_id=b.brand_id
                     AND t.type_id IN (1,3) AND b.brand_name LIKE '$brand'
                     AND img.main_image LIKE 'true' 
-                    ORDER BY r.rom_id;
+                    ORDER BY ct.product_id desc
+                    LIMIT $limit OFFSET $start
                 ";
             } else {
                 $model = strtolower($model);
@@ -67,7 +57,8 @@
                     AND t.type_id IN (1,3) AND b.brand_name LIKE '$brand'
                     AND m.model_name LIKE '$model'
                     AND img.main_image LIKE 'true' 
-                    ORDER BY r.rom_id
+                    ORDER BY ct.product_id desc
+                    LIMIT $limit OFFSET $start
                 ";
             }
 
@@ -90,11 +81,22 @@
             $result = $db->getInstance($select);
             return $result;
         }
-        function getCount(){
+        function getCountProduct($brand, $model = null){
             $db = new connect();
-            $select = "SELECT count(h.mahh) FROM hanghoa h, cthanghoa ct, sizegiay s, mausac m where h.mahh=ct.idhanghoa and ct.idmau=m.Idmau and ct.idsize=s.Idsize and h.giamgia > 0";
-            $result = $db->getList($select);
-            // return $result[0];
+            $model_query = "";
+            if($model != 'null') {
+                $model_query = "AND m.model_name LIKE '$model'";
+            }
+            $select = "SELECT COUNT(ct.product_id) AS soluong
+            FROM sanpham s, chitiet_sanpham ct, brand b,  model m, phone_image img, color c
+            WHERE s.masp = ct.masp AND img.masp=s.masp AND c.color_id = img.color_id
+            AND ct.color_id = c.color_id
+            AND s.brand_id=b.brand_id AND s.model_id=m.model_id
+            AND b.brand_name LIKE '$brand'
+            $model_query
+            AND img.main_image LIKE 'true' ";
+            $result = $db->getInstance($select);
+            return $result[0];
         }
 
         function getColor($masp, $rom_id) {

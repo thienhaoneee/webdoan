@@ -20,12 +20,15 @@
         if($data == true) {
           $_SESSION['user'] = array(
             'makh' => $data['khachhang_id'],
-            'name' => $data['khachhang_name']
+            'name' => $data['khachhang_name'],
+            'email' => $data['email'],
+            'diachi' => $data['diachi'],
+            'phone' => $data['phone']
           );
 
           $response = array(
             'error'=> false,
-            'messsag' => 'Đăng nhập thành công'
+            'message' => 'Đăng nhập thành công'
           );
           header('Content-Type: application/json');
           echo json_encode($response);
@@ -36,9 +39,8 @@
           unset($_SESSION['user']);
           $response = array(
             'error'=> false,
-            'messsag' => 'Đăng xuẩt thành công'
+            'message' => 'Đăng xuẩt thành công'
           );
-          header('Content-Type: application/json');
           echo json_encode($response);
         break;
    }

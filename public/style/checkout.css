@@ -152,3 +152,148 @@
     margin-bottom: 4px;
     font-size: 15px;
 }
+
+.form-group.invalid .form-message {
+    color: red;
+}
+.form-group.invalid input{
+    /* outline:  1px solid rgb(224, 84, 84); */
+    border-color: red;
+}
+.checkout-shopping__btn-checkout--hidden {
+    visibility: hidden;
+}
+
+/* modal */
+
+.modal-checkout.open {
+    display: flex;
+}
+.modal-checkout {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.modal-checkout .modal-checkout__container {
+    width: 900px;
+    max-width: calc(100% - 60px);
+    padding: 20px 40px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.modal-checkout .modal-header {
+    color: var(--primary-color);
+    font-size: 26px;
+    text-align: center;
+    padding-bottom: 0;
+    position: relative;
+}
+.modal-checkout .modal-header .modal-title {
+    margin-bottom: 10px;
+}
+.modal-checkout .modal-header .btn-close{
+    padding: 5px 8px;
+    font-size: 18px;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    border: unset;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    cursor: pointer;
+}
+.modal-checkout .modal-header .btn-close:hover {
+    opacity: 0.9;
+}
+.modal-checkout .output-form {
+    font-size: 22px;
+    display: flex; 
+    align-items: baseline;
+    margin-bottom: 6px;
+    
+}
+.modal-checkout .output-label {
+    color: #6f6f6f;
+    font-size: 16px;
+}
+
+.modal-checkout .output-out {
+    padding-left: 12px;
+    font-size: 18px ;
+}
+.modal-checkout .checkout-modal__table__wrapper {
+    max-height: 390px;
+    overflow-y: auto;
+}
+.modal-checkout .checkout-bill__table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.modal-checkout .checkout-bill__table td.center {
+    text-align: center;
+}
+.modal-checkout .checkout-bill__table td, 
+.modal-checkout .checkout-bill__table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    
+  }
+.modal-checkout .checkout-bill__table td {
+    vertical-align: middle;
+    font-size: 16px
+}
+.modal-checkout .checkout-bill__body-col__name {
+    max-width: 300px;
+}
+.modal-checkout .checkout-bill__table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--primary-color);
+    color: white;
+}
+.checkout-bill__col-name-sub {
+    padding-left: 6px;
+}
+.modal-checkout .checkout-bill__col-name-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.modal-checkout .checkout-bill__col-name {
+    margin-bottom: 0;
+    font-size: 16px;
+    overflow: hidden;
+    height: 18;
+    line-height: 18px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+
+}
+.modal-checkout .btn-checkout-cancel {
+    padding: 6px 18px;
+    font-size: 17px;
+    color: #fff;
+    background-color: var(--primary-color);
+    border: unset;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.modal-checkout .btn-checkout-cancel__wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+.modal-checkout .btn-checkout-cancel:hover {
+    opacity: 0.9;
+}

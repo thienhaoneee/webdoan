@@ -20,7 +20,6 @@
                         'admin_email' => $admin['admin_email'],
                     );
                     header("location: ./main.php?action=main");
-
     
                 } else {
                     $_SESSION['error'] = "Email hoặc mật khẩu không chính xác!";

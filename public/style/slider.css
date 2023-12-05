@@ -23,7 +23,7 @@
 .slider-item {
     width: 100%;
     flex: 1 0 100%;
-    /* padding: 0 10px; */
+    padding: 0 2px;
     display: flex;
     justify-content: center;
     user-select: none;
@@ -122,6 +122,10 @@ background-color: rgba(0,0,0,.32);
     margin-top: 12px;
 }
 .slider-2 .slider-dots{
+    display: none;
+}
+
+.slider-4 .slider-dots{
     display: none;
 }
 

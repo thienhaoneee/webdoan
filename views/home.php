@@ -294,7 +294,7 @@
                         while($row = $rs_model->fetch()):
                     ?>
                         <div class="product-model__item">
-                            <a href="index.php?action=shop&brand=<?php echo strtolower($row['brand_name']) 
+                            <a href="./index.php?action=shop&brand=<?php echo strtolower($row['brand_name']) 
                             ?>&model=<?php echo strtolower($row['model_name']) ?>" class="product-model__link"><?php echo $row['model_name'] ?></a>
                         </div>
                     <?php endwhile ?>
@@ -310,13 +310,15 @@
             <div class="product__wrapper rw">
                 <?php 
                     $sp = new sanpham();
-                    $result = $sp->getAllSPbyBrand('apple');
+                    $result = $sp->getAllSPbyBrand('apple','null',0,10);
                     while($row = $result->fetch()):
                 ?>
                     <div class="column l-20 c-6">
                         <a href="index.php?action=detail&id=<?php echo $row['product_id'] ?>" class="product__item">
                             <div class="product__header">
-                                <p class="product__sale-off">Giảm 25%</p>
+                                <?php if (($kq = percentSaled($row['price'], $row['sale_price'])) != 0) : ?>
+                                    <p class="product__sale-off">Giảm <?php echo $kq ?>%</p>
+                                <?php endif ?>
                                 <p class="product__installment">Trả góp 0%</p>
                             </div>
                             <div class="product__image">
@@ -324,8 +326,12 @@
                             </div>
                             <h3 class="product__name"><?php echo $row['tensp'].' '.$row['rom_name'].' '.$row['type_name'] ?></h3>
                             <div class="product__price-wrapper">
-                                <p class="product__sale-price"><?php echo formatCurrency($row['sale_price']) ?></p>
-                                <p class="product__old-price"><?php echo formatCurrency($row['price']) ?></p>
+                                <?php if($row['sale_price']) {?>
+                                    <p class="product__sale-price"><?php echo formatCurrency($row['sale_price']) ?></p>
+                                    <p class="product__old-price"><?php echo formatCurrency($row['price']) ?></p>
+                                <?php } else {?>
+                                    <p class="product__sale-price"><?php echo formatCurrency($row['price']) ?></p>
+                                <?php }?>
                             </div>
                             <div class="product__banner-cheapest">
                                 <img src="./public/image/main-banner/banner-cheapest.webp" alt="">
@@ -393,7 +399,8 @@
                         while($row = $rs_model->fetch()):
                     ?>
                         <div class="product-model__item">
-                            <a href="#" class="product-model__link"><?php echo $row['model_name'] ?></a>
+                            <a href="./index.php?action=shop&brand=<?php echo strtolower($row['brand_name']) 
+                            ?>&model=<?php echo strtolower($row['model_name']) ?>" class="product-model__link"><?php echo $row['model_name'] ?></a>
                         </div>
                     <?php endwhile ?>
                     <!-- ==> code-php end -->
@@ -407,14 +414,16 @@
             <div class="product__wrapper rw">
                 <?php 
                     $sp = new sanpham();
-                    $result = $sp->getAllSPbyBrand('samsung');
+                    $result = $sp->getAllSPbyBrand('samsung','null',0,10);
                     while($row = $result->fetch()):
                 ?>
                 <?php  ?>
                     <div class="column l-20 c-6">
                         <a href="index.php?action=detail&id=<?php echo $row['product_id'] ?>" class="product__item">
                             <div class="product__header">
-                                <p class="product__sale-off">Giảm 25%</p>
+                                <?php if (($kq = percentSaled($row['price'], $row['sale_price'])) != 0) : ?>
+                                    <p class="product__sale-off">Giảm <?php echo $kq ?>%</p>
+                                <?php endif ?>
                                 <p class="product__installment">Trả góp 0%</p>
                             </div>
                             <div class="product__image">
@@ -422,8 +431,12 @@
                             </div>
                             <h3 class="product__name"><?php echo $row['tensp'].' '.$row['rom_name'].' '.$row['type_name'] ?></h3>
                             <div class="product__price-wrapper">
-                                <p class="product__sale-price"><?php echo formatCurrency($row['sale_price']) ?></p>
-                                <p class="product__old-price"><?php echo formatCurrency($row['price']) ?></p>
+                                <?php if($row['sale_price']) {?>
+                                    <p class="product__sale-price"><?php echo formatCurrency($row['sale_price']) ?></p>
+                                    <p class="product__old-price"><?php echo formatCurrency($row['price']) ?></p>
+                                <?php } else {?>
+                                    <p class="product__sale-price"><?php echo formatCurrency($row['price']) ?></p>
+                                <?php }?>
                             </div>
                             <div class="product__banner-cheapest">
                                 <img src="./public/image/main-banner/banner-cheapest.webp" alt="">
@@ -510,10 +523,13 @@
 <!-- ================= Footer Area End ================= -->
     
 
-    <!-- <script src="./public/javascript/slider.js"></script> -->
+    <script src="./public/javascript/slider.js"></script>
+    <script src="./public/javascript/model_category.js"></script>
+    <script src="./public/javascript/header.js"></script>
+    <script src="./public/javascript/home.js"></script>
     <script type="module">
-        <?php include('./public/javascript/slider.js') ?>
-        <?php include('./public/javascript/model_category.js') ?>
-        <?php include('./public/javascript/header.js') ?>
-        <?php include('./public/javascript/home.js') ?>
+        <?php //include('./public/javascript/slider.js') ?>
+        <?php //include('./public/javascript/model_category.js') ?>
+        <?php //include('./public/javascript/header.js') ?>
+        <?php //include('./public/javascript/home.js') ?>
     </script>

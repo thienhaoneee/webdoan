@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 include "Models/connect.php";
 
@@ -24,10 +25,13 @@ function myModelClassLoader($className)
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="./public/dist/css/adminlte.min.css">
 
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <link rel="stylesheet" href="./public/admin/style/main.css">
+  <link rel="stylesheet" href="./public/admin/style/add_detail.css">
+  <link rel="stylesheet" href="./public/admin/style/thongke.css">
 </head>
 <!--
 `body` tag options:
@@ -39,7 +43,7 @@ function myModelClassLoader($className)
   * sidebar-mini
 -->
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -168,11 +172,7 @@ function myModelClassLoader($className)
             <i class="fas fa-expand-arrows-alt"></i>
           </a>
         </li>
-        <!-- <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li> -->
+        
       </ul>
     </nav>
     <!-- /.navbar -->
@@ -180,9 +180,13 @@ function myModelClassLoader($className)
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="./main.php" class="brand-link">
+      <?php
+        $admin = $_SESSION['admin']??'';
+
+      ?>
+      <a href="./main.php?action=main" class="brand-link">
         <img src="./public/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Admin</span>
       </a>
 
       <!-- Sidebar -->
@@ -193,7 +197,7 @@ function myModelClassLoader($className)
             <img src="./public/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">Xin chào! <?php echo $admin['admin_name']?></a>
           </div>
         </div>
 
@@ -224,31 +228,34 @@ function myModelClassLoader($className)
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="./main.php?action=sanpham&act=list" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Danh sách sản phẩm</p>
+                    <p>Quản lí mã sản phẩm</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="./main.php?action=sanpham&act=add" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Thêm sản phẩm</p>
+                    <p>Thêm mã sản phẩm</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index3.html" class="nav-link">
+                  <a href="./main.php?action=thongke" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Dashboard v3</p>
+                    <p>Thống kê</p>
                   </a>
                 </li>
-                <li class="nav-item logout-btn">
+              </ul>
+            </li>
+          </ul>
+          
+          <ul class="nav nav-pills nav-sidebar flex-column">
+            <li class="nav-item logout-btn">
                   <a href="admin.php?action=login&act=logout" class="nav-link">
                     <i class="fa-solid fa-right-from-bracket" style="padding: 0 4px;"></i>
                     <p>Đăng xuất</p>
                   </a>
                 </li>
-              </ul>
-            </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -258,33 +265,19 @@ function myModelClassLoader($className)
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Dashboard v3</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard v3</li>
-              </ol>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
-
       <!-- Main content -->
-      <div class="content">
+      <div class="content py-3">
         <div class="container-fluid">
           <?php
           $ctr = 'main';
           if (isset($_GET['action'])) {
             $ctr = $_GET['action'];
           }
-          include('./Controllers/admin/' . $ctr . '.php');
+          if(isset($_SESSION['admin']) || $ctr =='login') {
+            include('./Controllers/admin/' . $ctr . '.php');
+          } else {
+            header("location: ./admin.php?action=login");
+          }
           ?>
 
 
@@ -295,15 +288,9 @@ function myModelClassLoader($className)
     </div>
     <!-- /.content-wrapper -->
 
-
-
-
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
     </aside>
-    <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
     <footer class="main-footer">
@@ -313,13 +300,14 @@ function myModelClassLoader($className)
         <b>Version</b> 3.1.0
       </div>
     </footer>
+
   </div>
   <!-- ./wrapper -->
 
   <!-- REQUIRED SCRIPTS -->
 
   <!-- jQuery -->
-  <script src="./public/plugins/jquery/jquery.min.js"></script>
+  <!-- <script src="./public/plugins/jquery/jquery.min.js"></script> -->
   <!-- Bootstrap -->
   <script src="./public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- bs5 -->
@@ -329,13 +317,27 @@ function myModelClassLoader($className)
   <script src="./public/dist/js/adminlte.js"></script>
 
   <!-- OPTIONAL SCRIPTS -->
-  <script src="./public/plugins/chart.js/Chart.min.js"></script>
+  <!-- <script src="./public/plugins/chart.js/Chart.min.js"></script> -->
   <!-- AdminLTE for demo purposes -->
-  <script src="./public/dist/js/demo.js"></script>
+  <!-- <script src="./public/dist/js/demo.js"></script> -->
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="./public/dist/js/pages/dashboard3.js"></script>
+  <!-- <script src="./public/dist/js/pages/dashboard3.js"></script> -->
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./public/javascript/validator.js"></script>
+  <script src="./public/admin/js/main.js"></script>
+  <script src="./public/admin/js/add_detail.js"></script>
+  <script src="./public/admin/js/edit_detail.js"></script>
   <script src="https://kit.fontawesome.com/737f765a39.js" crossorigin="anonymous"></script>
+
+  <?php
+    function formatCurrency($amount) {
+      // Sử dụng hàm number_format để định dạng số tiền
+      // Thiết lập số lẻ thành 0 và dấu phân cách hàng nghìn là ","
+      return number_format($amount, 0, '.', ',') . 'đ';
+    }
+  ?>
 </body>
 
 </html>
+<?php ob_end_flush();?>

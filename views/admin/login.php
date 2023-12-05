@@ -26,7 +26,7 @@
       <p class="login-box-msg" style="color:red;"><?php if(isset($_SESSION['error'])){echo $_SESSION['error'];}?></p>
       <form action="admin.php?action=login&act=login_action" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email" name="email">
+          <input type="email" class="form-control" placeholder="Email" name="email" value="admin@gmail.com">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" name="password">
+          <input type="password" class="form-control" placeholder="Password" name="password" value="123456">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

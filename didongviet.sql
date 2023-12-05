@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th10 18, 2023 lúc 08:34 AM
+-- Thời gian đã tạo: Th12 05, 2023 lúc 12:22 PM
 -- Phiên bản máy phục vụ: 8.0.31
 -- Phiên bản PHP: 8.1.13
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `chitiet_sanpham` (
   KEY `fk_ctsanpham_type_id` (`type_id`),
   KEY `fk_ctsanpham_imagesp_id` (`image_id`),
   KEY `fk_ctsanpham_masp` (`masp`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `chitiet_sanpham`
@@ -151,7 +151,8 @@ INSERT INTO `chitiet_sanpham` (`product_id`, `masp`, `rom_id`, `color_id`, `quan
 (78, 31, 5, 9, 20, 36990000, 25990000, 1, NULL, ' Samsung Galaxy S23 Ultra 5G', '2023-11-15 08:44:44', '2023-11-15 08:44:44'),
 (79, 31, 4, 9, 20, 31990000, 22990000, 1, NULL, 'Samsung Galaxy S23 Ultra 5G ', '2023-11-15 08:45:23', '2023-11-15 08:45:23'),
 (80, 31, 3, 5, 20, 31990000, 22990000, 1, NULL, 'Samsung Galaxy S23 Ultra 5G', '2023-11-18 08:00:02', '2023-11-15 08:46:14'),
-(81, 31, 4, 1, 20, 31990000, 0, 1, NULL, 'Samsung Galaxy S23 Ultra 5G', '2023-11-15 08:47:23', '2023-11-15 08:47:02');
+(81, 31, 4, 1, 20, 31990000, 0, 1, NULL, 'Samsung Galaxy S23 Ultra 5G', '2023-11-15 08:47:23', '2023-11-15 08:47:02'),
+(83, 31, 1, 4, 12, 19999, 0, 1, NULL, 'kkk', '2023-11-24 08:28:46', '2023-11-24 08:21:05');
 
 -- --------------------------------------------------------
 
@@ -198,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`cmt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `comment`
@@ -232,7 +233,22 @@ INSERT INTO `comment` (`cmt_id`, `makh`, `product_id`, `content`, `parent_id`, `
 (67, 5, 76, '222', 76, '2023-11-16 10:41:23', '2023-11-16 10:41:23'),
 (68, 5, 76, '123', 61, '2023-11-16 10:41:40', '2023-11-16 10:41:40'),
 (69, 5, 9, '123', 0, '2023-11-16 10:54:04', '2023-11-16 10:54:04'),
-(70, 5, 9, '333', 9, '2023-11-16 10:54:10', '2023-11-16 10:54:10');
+(70, 5, 9, '333', 9, '2023-11-16 10:54:10', '2023-11-16 10:54:10'),
+(71, 5, 75, '123', 0, '2023-11-24 14:32:44', '2023-11-24 14:32:44'),
+(72, 5, 75, '123', 75, '2023-11-24 14:32:51', '2023-11-24 14:32:51'),
+(73, 5, 75, '222', 0, '2023-11-24 14:33:26', '2023-11-24 14:33:26'),
+(74, 5, 75, '2323', 71, '2023-11-24 14:35:39', '2023-11-24 14:35:39'),
+(75, 5, 75, 'kkk', 0, '2023-11-24 14:36:40', '2023-11-24 14:36:40'),
+(76, 5, 75, '232333', 75, '2023-11-24 14:36:46', '2023-11-24 14:36:46'),
+(77, 5, 75, '111', 75, '2023-11-24 14:37:35', '2023-11-24 14:37:35'),
+(78, 5, 17, 'qoqo', 0, '2023-11-24 14:38:13', '2023-11-24 14:38:13'),
+(79, 5, 17, '999', 17, '2023-11-24 14:38:19', '2023-11-24 14:38:19'),
+(80, 5, 17, '233', 0, '2023-11-24 14:40:21', '2023-11-24 14:40:21'),
+(85, 5, 74, '333', 0, '2023-11-24 14:57:56', '2023-11-24 14:57:56'),
+(86, 5, 74, '332', 85, '2023-11-24 14:58:02', '2023-11-24 14:58:02'),
+(87, 5, 73, '222', 0, '2023-11-24 14:58:22', '2023-11-24 14:58:22'),
+(88, 5, 73, '21', 87, '2023-11-24 14:58:28', '2023-11-24 14:58:28'),
+(89, 5, 73, 'oke\n', 87, '2023-11-24 14:58:59', '2023-11-24 14:58:59');
 
 -- --------------------------------------------------------
 
@@ -411,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `phone_image` (
   PRIMARY KEY (`image_id`),
   KEY `fk_sanpham_image_masp` (`masp`),
   KEY `fk_sanpham_image_color_id` (`color_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `phone_image`
@@ -460,7 +476,8 @@ INSERT INTO `phone_image` (`image_id`, `masp`, `color_id`, `image_url`, `main_im
 (72, 29, 2, 'oppo/oppo-find-x-series/oppo-reno8t-5g.webp', 'true'),
 (73, 31, 9, 'samsung/s23-series/galaxy-s23-ultra-xanh.webp', 'true'),
 (74, 31, 5, 'samsung/s23-series/galaxy-s23-ultra-den.webp', 'true'),
-(75, 31, 1, 'samsung/s23-series/galaxy-s23-ultra-tim.webp', 'true');
+(75, 31, 1, 'samsung/s23-series/galaxy-s23-ultra-tim.webp', 'true'),
+(77, 31, 4, 'samsung/s22-series/oppo-reno8t-5g.webp', 'true');
 
 -- --------------------------------------------------------
 
